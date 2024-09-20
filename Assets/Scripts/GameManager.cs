@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     }
     void SpawnMeteor()
     {
-        Instantiate(meteorPrefab, new Vector3(Random.Range(-8, 8), 7.5f, 0), Quaternion.identity);
+        Instantiate(meteorPrefab, new Vector3(Random.Range(-8, 8), 7.5f, 0), Quaternion.Euler(0, 0, Random.Range(-75.0f, 75.0f)));
     }
 
     void BigMeteor()
