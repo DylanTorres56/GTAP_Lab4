@@ -161,3 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9766ed80dded6154bab406035a716cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screenShakeCall: {fileID: 0}
+  shakeAmount: 3
+  shakeTimer: 0.2

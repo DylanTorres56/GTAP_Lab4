@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Meteor : MonoBehaviour
 {
-    
-    // Start is called before the first frame update
-    void Start()
+
+    [SerializeField] ScreenShake screenShakeCall;
+    [SerializeField] float shakeAmount, shakeTimer; // The amount to change the Virtual Camera's amplitude by, and for how long.
+
+    // Awake is called on the first active frame
+    void Awake()
     {
-        
+        screenShakeCall = GameObject.FindGameObjectWithTag("VCam").GetComponent<ScreenShake>();
     }
 
     // Update is called once per frame
@@ -29,11 +32,13 @@ public class Meteor : MonoBehaviour
             GameObject.Find("GameManager").GetComponent<GameManager>().gameOver = true;
             Destroy(whatIHit.gameObject);
             Destroy(this.gameObject);
+            screenShakeCall.CamShake(shakeAmount, shakeTimer);
         } else if (whatIHit.tag == "Laser")
         {
             GameObject.Find("GameManager").GetComponent<GameManager>().meteorCount++;
             Destroy(whatIHit.gameObject);
             Destroy(this.gameObject);
+            screenShakeCall.CamShake(shakeAmount, shakeTimer);
         }
     }
 }
