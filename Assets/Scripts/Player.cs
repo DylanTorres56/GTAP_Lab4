@@ -17,6 +17,10 @@ public class Player : MonoBehaviour
     PlayerInput playerInput;
     InputAction moveAction;
     Rigidbody2D rb;
+
+    public AudioSource audioSource;
+    public AudioClip shootSound;
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -71,6 +75,7 @@ public class Player : MonoBehaviour
             return;
         }
         Instantiate(laserPrefab, transform.position + this.transform.forward, this.transform.rotation);
+        audioSource.PlayOneShot(shootSound, 1.0f);
         canShoot = false;
         StartCoroutine("Cooldown");
 
