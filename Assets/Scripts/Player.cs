@@ -40,6 +40,11 @@ public class Player : MonoBehaviour,IDamagable
         rb = GetComponent<Rigidbody2D>();
        
     }
+    private void OnDestroy()
+    {
+        moveAction.performed -= OnMove;
+        playerInput.actions["Fire"].performed -= Shooting;
+    }
     // Start is called before the first frame update
     void Start()
     {

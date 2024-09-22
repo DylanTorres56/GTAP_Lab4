@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
         Instantiate(playerPrefab, transform.position, Quaternion.identity);
         InvokeRepeating("SpawnMeteor", 1f, 2f);
         restartAction.performed += Restart;
+        restartAction.Enable();
 
         Meteor.OnMeteorDestroyed += MeteorDestroyed;
         Meteor.OnMeteorDamaged += PlaySound;
@@ -47,6 +48,9 @@ public class GameManager : MonoBehaviour
     {
         if (gameOver)
         {
+            Meteor.OnMeteorDestroyed -= MeteorDestroyed;
+            Meteor.OnMeteorDamaged -= PlaySound;
+            Player.PlayerDied -= PlayerDied;
             SceneManager.LoadScene("Week5Lab");
         }
     }
