@@ -1,10 +1,11 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour,IDamagable
 {
     public GameObject laserPrefab;
     [SerializeField] float thrust,rotSpeed;
@@ -13,7 +14,8 @@ public class Player : MonoBehaviour
     private float horizontalScreenLimit = 10f;
     private float verticalScreenLimit = 6f;
     private bool canShoot = true;
-    
+    [SerializeField]
+    float health;
     PlayerInput playerInput;
     InputAction moveAction;
     Rigidbody2D rb;
@@ -21,8 +23,11 @@ public class Player : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip shootSound;
 
+    CinemachineImpulseSource impulse;
+
     private void Awake()
     {
+        impulse=this.GetComponent<CinemachineImpulseSource>();
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions["Move"];
         playerInput.actions["Fire"].performed += Shooting;
@@ -85,5 +90,17 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(fireDelay);
         canShoot = true;
+    }
+
+    public void TakeDamage(int damage = 1)
+    {
+
+        health -= 1;
+        if (health <= 0)
+        {
+            impulse.GenerateImpulse();
+            Destroy(this.gameObject);
+            
+        }
     }
 }

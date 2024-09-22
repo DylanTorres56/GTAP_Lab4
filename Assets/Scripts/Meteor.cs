@@ -1,21 +1,34 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Meteor : MonoBehaviour
+public class Meteor : MonoBehaviour,IDamagable
 {
-
-    [SerializeField] ScreenShake screenShakeCall;
-    [SerializeField] float shakeAmount, shakeTimer; // The amount to change the Virtual Camera's amplitude by, and for how long.
+    [SerializeField]int health = 1;
+    //[SerializeField] float shakeAmount, shakeTimer; // The amount to change the Virtual Camera's amplitude by, and for how long.
 
     [SerializeField] AudioClip explosion;
+    [SerializeField] AudioClip tookDamage;
     static public Action<AudioClip> OnMeteorDestroyed;
+    static public Action<AudioClip> OnMeteorDamaged;
+    CinemachineImpulseSource impulse;
 
+    private void OnValidate()
+    {
+        if (health < 1)
+        {
+            health = 1; 
+        }
+        this.transform.localScale = Vector3.one * health;
+    }
     // Awake is called on the first active frame
     void Awake()
     {
-        screenShakeCall = GameObject.FindGameObjectWithTag("VCam").GetComponent<ScreenShake>();
+        this.transform.localScale = Vector3.one*health;
+        impulse = GetComponent<CinemachineImpulseSource>();
+        
     }
 
     // Update is called once per frame
@@ -33,16 +46,26 @@ public class Meteor : MonoBehaviour
     {
         if (whatIHit.tag == "Player")
         {
-            GameObject.Find("GameManager").GetComponent<GameManager>().gameOver = true;
-            screenShakeCall.CamShake(shakeAmount, shakeTimer);
+            whatIHit.gameObject.GetComponent<IDamagable>().TakeDamage(health);
+            impulse.GenerateImpulse();
             Destroy(whatIHit.gameObject);
             Destroy(this.gameObject);
-        } else if (whatIHit.tag == "Laser")
+        }
+    }
+
+
+    public void TakeDamage(int damage = 1)
+    {
+        health -= damage;
+        if (health <= 0)
         {
             OnMeteorDestroyed?.Invoke(explosion);
-            screenShakeCall.CamShake(shakeAmount, shakeTimer);
-            Destroy(whatIHit.gameObject);
+            impulse.GenerateImpulse();
             Destroy(this.gameObject);
+        }
+        else
+        {
+            OnMeteorDamaged?.Invoke(tookDamage);
         }
     }
 }

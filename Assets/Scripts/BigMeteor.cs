@@ -47,4 +47,5 @@ public class BigMeteor : MonoBehaviour
             screenShakeCall.CamShake(shakeAmount, shakeTimer);
         }
     }
+
 }

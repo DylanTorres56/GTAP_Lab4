@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
         restartAction.performed += Restart;
 
         Meteor.OnMeteorDestroyed += MeteorDestroyed;
+        Meteor.OnMeteorDamaged += PlaySound;
     }
 
     // Update is called once per frame
@@ -61,10 +62,13 @@ public class GameManager : MonoBehaviour
         meteorCount = 0;
         Instantiate(bigMeteorPrefab, new Vector3(Random.Range(-8, 8), 7.5f, 0), Quaternion.identity);
     }
-
-    void MeteorDestroyed(AudioClip audioClip)
+    void PlaySound(AudioClip audioClip)
     {
         audioSource.PlayOneShot(audioClip, 1.0f);
+    }
+    void MeteorDestroyed(AudioClip audioClip)
+    {
+        PlaySound(audioClip);
         meteorCount++;
     }
 }

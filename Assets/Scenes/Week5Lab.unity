@@ -375,7 +375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 7158442464957206486, guid: 78da5bc7391e681469a6daeeda50dc41, type: 3}
   meteorPrefab: {fileID: 5841098876348517303, guid: 6d66530d7aa7838409a2fd8d5bf6a0a4, type: 3}
-  bigMeteorPrefab: {fileID: 5841098876348517303, guid: d601771a08acde745ae7ef51fc2d67b8, type: 3}
+  bigMeteorPrefab: {fileID: 8449841969196820876, guid: b7b70c9d1cb08e34398dfae0bcac4c13, type: 3}
   gameOver: 0
   meteorCount: 0
   restartAction:
@@ -579,6 +579,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1668000605}
   - component: {fileID: 1668000604}
+  - component: {fileID: 1668000607}
   - component: {fileID: 1668000603}
   - component: {fileID: 1668000606}
   m_Layer: 0
@@ -669,6 +670,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cVC: {fileID: 0}
   cBMCP: {fileID: 0}
+--- !u!114 &1668000607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668000602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ApplyAfter: 2
+  m_ChannelMask: 1
+  m_Gain: 1
+  m_Use2DDistance: 0
+  m_UseCameraSpace: 1
+  m_ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
