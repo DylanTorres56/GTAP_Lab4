@@ -5135,7 +5135,7 @@ MonoBehaviour:
   rotSpeed: 180
   maxSpeed: 12
   fireDelay: 0
-  health: 0
+  health: 1
   audioSource: {fileID: 8842162126931062294}
   shootSound: {fileID: 8300000, guid: 80d35e5b156eb7642ba9bf74855b0046, type: 3}
   jet: {fileID: 4615079393251756227}

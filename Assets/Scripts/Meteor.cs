@@ -47,9 +47,7 @@ public class Meteor : MonoBehaviour,IDamagable
         if (whatIHit.tag == "Player")
         {
             whatIHit.gameObject.GetComponent<IDamagable>().TakeDamage(health);
-            impulse.GenerateImpulse();
-            Destroy(whatIHit.gameObject);
-            Destroy(this.gameObject);
+            TakeDamage(health);
         }
     }
 
