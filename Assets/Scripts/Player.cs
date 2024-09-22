@@ -24,12 +24,18 @@ public class Player : MonoBehaviour,IDamagable
     public AudioClip shootSound;
 
     CinemachineImpulseSource impulse;
+    [SerializeField]
+    LineRenderer jet;
+    [SerializeField]
+    ParticleSystem jetParticle;
 
+    public static Action PlayerDied;
     private void Awake()
     {
         impulse=this.GetComponent<CinemachineImpulseSource>();
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions["Move"];
+        moveAction.performed += OnMove;
         playerInput.actions["Fire"].performed += Shooting;
         rb = GetComponent<Rigidbody2D>();
        
@@ -57,6 +63,12 @@ public class Player : MonoBehaviour,IDamagable
     {
         //transform.Translate(moveAction.ReadValue<Vector2>() * Time.deltaTime * maxSpeed);
         float fwdInput = Mathf.Clamp(moveAction.ReadValue<Vector2>().y,-0.25f,1);
+        float offest = (fwdInput) / jet.positionCount;
+        for (int i = 1; i < jet.positionCount; i++)
+        {
+
+            jet.SetPosition(i, Vector3.down * i * offest);
+        }
         float rot = moveAction.ReadValue<Vector2>().x;
         // rb.AddForce(fwdThrust * this.transform.up*rb.mass,ForceMode2D.Force);
         rb.velocity += ((Vector2)this.transform.up * (fwdInput*thrust * Time.fixedDeltaTime));
@@ -99,8 +111,20 @@ public class Player : MonoBehaviour,IDamagable
         if (health <= 0)
         {
             impulse.GenerateImpulse();
+            PlayerDied?.Invoke();
             Destroy(this.gameObject);
             
+        }
+    }
+    void OnMove(InputAction.CallbackContext context)
+    {
+        if (context.ReadValue<Vector2>().y>0)
+        {
+            jetParticle.Play();
+        }
+        else
+        {
+            jetParticle.Stop();
         }
     }
 }

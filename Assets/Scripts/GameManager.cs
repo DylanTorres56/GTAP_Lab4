@@ -28,22 +28,20 @@ public class GameManager : MonoBehaviour
 
         Meteor.OnMeteorDestroyed += MeteorDestroyed;
         Meteor.OnMeteorDamaged += PlaySound;
+        Player.PlayerDied += PlayerDied;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameOver)
-        {
-            CancelInvoke();
-        }
 
-       
+        
+    }
+    void PlayerDied()
+    {
+        gameOver = true;
+        CancelInvoke();
 
-        if (meteorCount == 5)
-        {
-            BigMeteor();
-        }
     }
     void Restart(InputAction.CallbackContext context)
     {
@@ -70,5 +68,9 @@ public class GameManager : MonoBehaviour
     {
         PlaySound(audioClip);
         meteorCount++;
+        if (meteorCount == 5)
+        {
+            BigMeteor();
+        }
     }
 }
