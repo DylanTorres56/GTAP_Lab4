@@ -15,12 +15,18 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     InputAction restartAction;
 
+    public AudioSource audioSource;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
         Instantiate(playerPrefab, transform.position, Quaternion.identity);
         InvokeRepeating("SpawnMeteor", 1f, 2f);
         restartAction.performed += Restart;
+
+        Meteor.OnMeteorDestroyed += MeteorDestroyed;
     }
 
     // Update is called once per frame
@@ -54,5 +60,11 @@ public class GameManager : MonoBehaviour
     {
         meteorCount = 0;
         Instantiate(bigMeteorPrefab, new Vector3(Random.Range(-8, 8), 7.5f, 0), Quaternion.identity);
+    }
+
+    void MeteorDestroyed(AudioClip audioClip)
+    {
+        audioSource.PlayOneShot(audioClip, 1.0f);
+        meteorCount++;
     }
 }
